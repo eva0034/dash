@@ -111,6 +111,7 @@ class OpenAutoPage : public QStackedWidget, public Page {
     QWidget *connect_msg();
 
     Config *config;
+	QLabel *logo;
     OpenAutoFrame *frame;
     OpenAutoWorker *worker;
     const QString connected_icon_name;
