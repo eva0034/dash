@@ -24,8 +24,8 @@ QTabWidget::pane {
 QTabBar::tab {
     background-color: transparent;
     color: rgba(255, 255, 255, 179);
-    margin-top: 2px;
-    padding: 2px;
+    margin-top: 4px;
+    padding: 16px;
     border-bottom: 2px solid transparent;
 }
 
@@ -83,6 +83,7 @@ QPushButton {
     color: rgb(255, 255, 255);
     border: none;
     padding: 8px;
+    margin: 8px;
     border-radius: 8px;
 }
 
@@ -120,7 +121,6 @@ QFrame[frameShape="5"][frameShadow="16"] {
 QListWidget {
     background-color: rgb(46, 46, 46); 
     color: rgb(255, 255, 255);
-    border: 2px solid rgb(66, 66, 66);
 }
 
 QListView {
@@ -130,6 +130,11 @@ QListView {
 
 QListView::indicator {
     border: none;
+}
+
+QListView::item {
+    padding: 8px;
+    margin: 2px;
 }
 
 QListView::item:selected {
