@@ -166,7 +166,7 @@ if [ $deps = false ]
   else
     if [ $BULLSEYE = false ]; then
       echo Adding qt5-default to dependencies
-      dependencies[${#dependencies[@]}]="qt5-default"
+      dependencies[${#dependencies[@]}]="qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools"
     fi
     echo installing dependencies
     #loop through dependencies and install
