@@ -449,7 +449,11 @@ void OpenAutoPage::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
     this->frame->resize(this->size());
     this->worker->update_size();
+	
+	QSize size = QSize(event->size().width() / 3 * 2, event->size().height() / 3 * 2);
+    this->logo->setPixmap(QPixmap(":/splash.png").scaled(size, Qt::KeepAspectRatio));
 }
+
 
 QWidget *OpenAutoPage::connect_msg()
 {
@@ -459,6 +463,9 @@ QWidget *OpenAutoPage::connect_msg()
 
     QLabel *label = new QLabel("Connect Device to Start Android Auto", widget);
     label->setAlignment(Qt::AlignCenter);
+	
+	this->logo = new QLabel(widget);
+    this->logo->setAlignment(Qt::AlignCenter);
 
     QHBoxLayout *layout2 = new QHBoxLayout();
     layout2->setContentsMargins(0, 0, 0, 0);
@@ -483,6 +490,7 @@ QWidget *OpenAutoPage::connect_msg()
 
     layout->addLayout(layout2);
     layout->addStretch();
+    layout->addWidget(this->logo);
     layout->addWidget(label);
     layout->addStretch();
 
