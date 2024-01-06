@@ -1,7 +1,8 @@
-# OpenDash
+# OpenDash (FORD BRANDED)
 
 OpenDash is a Qt-based infotainment center for your Linux OpenAuto installation!
 The OpenDash project includes OpenAuto, AASDK, and Dash.
+This is a forked version of OpenDash with Ford Branding instead of OpenDash Branding.
 
 Main features of Dash include:
 
