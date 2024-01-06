@@ -19,7 +19,7 @@ class OfficialRPi : public QObject, BrightnessPlugin {
     void set(int brightness) override;
 
    private:
-    const QString PATH = "/sys/class/backlight/rpi_backlight/brightness";
+    const QString PATH = "/sys/class/backlight/10-0045/brightness";
 
     QFile brightness_attribute;
 };
