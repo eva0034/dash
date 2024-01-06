@@ -1,6 +1,6 @@
 QMainWindow,
 QMainWindow > QFrame {
-    background-color: rgb(18, 18, 18);
+    background-color: rgb(0, 0, 0);
 }
 
 QWidget {
