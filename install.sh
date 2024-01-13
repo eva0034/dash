@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #repo addresses
-aasdkRepo="https://github.com/OpenDsh/aasdk"
-gstreamerRepo="https://github.com/GStreamer/qt-gstreamer"
-openautoRepo="https://github.com/openDsh/openauto"
-h264bitstreamRepo="https://github.com/aizvorski/h264bitstream"
+aasdkRepo="https://github.com/eva0034/aasdk"
+gstreamerRepo="https://github.com/eva0034/qt-gstreamer"
+openautoRepo="https://github.com/eva0034/openauto"
+h264bitstreamRepo="https://github.com/eva0034/h264bitstream"
 
 #Help text
 display_help() {
@@ -138,6 +138,7 @@ dependencies=(
 "gstreamer1.0-plugins-bad"
 "gstreamer1.0-libav"
 "gstreamer1.0-alsa"
+"gstreamer1.0-plugins-good"
 "libgstreamer-plugins-base1.0-dev"
 "qtdeclarative5-dev"
 "libgstreamer-plugins-bad1.0-dev"
@@ -152,6 +153,9 @@ dependencies=(
 "libtool"
 "autoconf"
 "ffmpeg"
+"doxygen"
+"meson"
+"qtbase5-dev"
 )
 
 
@@ -162,7 +166,7 @@ if [ $deps = false ]
   else
     if [ $BULLSEYE = false ]; then
       echo Adding qt5-default to dependencies
-      dependencies[${#dependencies[@]}]="qt5-default"
+      dependencies[${#dependencies[@]}]="qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools"
     fi
     echo installing dependencies
     #loop through dependencies and install
@@ -195,17 +199,17 @@ if [ $pulseaudio = false ]
     echo Grabbing pulseaudio deps
     sudo sed -i 's/#deb-src/deb-src/g' /etc/apt/sources.list
     sudo apt-get update -y
+    cd ..
     git clone git://anongit.freedesktop.org/pulseaudio/pulseaudio
     sudo apt-get install -y autopoint
     cd pulseaudio
-    git checkout tags/v12.99.3
     echo Applying imtu patch
     sed -i 's/*imtu = 48;/*imtu = 60;/g' src/modules/bluetooth/backend-native.c
     sed -i 's/*imtu = 48;/*imtu = 60;/g' src/modules/bluetooth/backend-ofono.c
     sudo apt-get build-dep -y pulseaudio
-    ./bootstrap.sh
-    make -j4
-    sudo make install
+    meson setup build
+    sudo ninja -C build
+    sudo ninja -C build install
     sudo ldconfig
     # copy configs and force an exit 0 just in case files are identical (we don't care but it will make pimod exit)
     sudo cp /usr/share/pulseaudio/alsa-mixer/profile-sets/* /usr/local/share/pulseaudio/alsa-mixer/profile-sets/
@@ -244,6 +248,7 @@ if [ $bluez = false ]
   else
     echo Installing bluez
     sudo apt-get install -y libdbus-1-dev libudev-dev libical-dev libreadline-dev libjson-c-dev
+    cd ..
     wget www.kernel.org/pub/linux/bluetooth/bluez-5.63.tar.xz
     tar -xvf bluez-5.63.tar.xz bluez-5.63/
     rm bluez-5.63.tar.xz
@@ -407,7 +412,7 @@ if [ $gstreamer = true ]; then
 
   #clone gstreamer
   echo Cloning Gstreamer
-  git clone $gstreamerRepo
+  git clone --branch buster $gstreamerRepo
   if [[ $? -eq 0 ]]; then
     echo -e Gstreamer cloned OK
   else
